@@ -5688,7 +5688,8 @@ function view2(model) {
   return div(
     toList([]),
     toList([
-      fragment(
+      keyed(
+        fragment,
         (() => {
           let _pipe = model.cats;
           let _pipe$1 = map_to_list(_pipe);
@@ -5701,7 +5702,10 @@ function view2(model) {
           return map2(
             _pipe$2,
             (a) => {
-              return view_cat_input(first(a), second(a));
+              return [
+                to_string3(first(a)),
+                view_cat_input(first(a), second(a))
+              ];
             }
           );
         })()
@@ -5725,7 +5729,7 @@ function main() {
     throw makeError(
       "assignment_no_match",
       "inputs_focus_repro",
-      72,
+      78,
       "main",
       "Assignment pattern did not match",
       { value: $ }

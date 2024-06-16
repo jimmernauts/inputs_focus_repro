@@ -39,11 +39,17 @@ pub fn update(model: Model, msg: Msg) -> #(Model, effect.Effect(Msg)) {
 
 pub fn view(model: Model) -> element.Element(Msg) {
   html.div([], [
-    element.fragment(
+    element.keyed(
+      element.fragment,
       model.cats
-      |> dict.to_list
-      |> list.sort(by: fn(a, b) { int.compare(pair.first(a), pair.first(b)) })
-      |> list.map(fn(a) { view_cat_input(pair.first(a), pair.second(a)) }),
+        |> dict.to_list
+        |> list.sort(by: fn(a, b) { int.compare(pair.first(a), pair.first(b)) })
+        |> list.map(fn(a) {
+          #(
+            int.to_string(pair.first(a)),
+            view_cat_input(pair.first(a), pair.second(a)),
+          )
+        }),
     ),
     html.button([event.on_click(AddedInput)], [html.text("Add another cat")]),
   ])
